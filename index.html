@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samia Naggara — Data & Cloud Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0D0D0F;
+            --bg-card: #141418;
+            --bg-card-hover: #1A1A20;
+            --border: #2A2A32;
+            --border-hover: #E891B2;
+            --rose: #E891B2;
+            --rose-dim: rgba(232, 145, 178, 0.15);
+            --rose-glow: rgba(232, 145, 178, 0.08);
+            --text-primary: #E8E6E3;
+            --text-secondary: #8A8A96;
+            --text-muted: #5A5A66;
+            --tag-bg: #1E1E26;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .glow-bg {
+            position: fixed;
+            top: -200px; right: -200px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, var(--rose-glow) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 0;
+            z-index: 100;
+            background: rgba(13, 13, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .nav-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--rose);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        nav .nav-links { display: flex; gap: 32px; }
+
+        nav .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        nav .nav-links a:hover { color: var(--rose); }
+
+        /* ===== MAIN ===== */
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding-top: 140px;
+            padding-bottom: 80px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero .greeting {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--rose);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.1s forwards;
+        }
+
+        .hero h1 .accent { color: var(--rose); }
+
+        .hero .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.2s forwards;
+        }
+
+        .hero .description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.3s forwards;
+        }
+
+        .hero .cta-row {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.6s ease 0.4s forwards;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--rose);
+            color: var(--bg-dark);
+            border: 1px solid var(--rose);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--rose);
+            box-shadow: 0 0 20px var(--rose-dim);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--rose);
+            color: var(--rose);
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--rose);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-label .arrow { font-size: 16px; }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 48px;
+        }
+
+        /* ===== PROJECT CARDS ===== */
+        .projects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 32px;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; height: 0;
+            background: var(--rose);
+            transition: height 0.4s ease;
+        }
+
+        .project-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-hover);
+            transform: translateX(4px);
+        }
+
+        .project-card:hover::before { height: 100%; }
+
+        .project-card .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .project-card .project-name { font-size: 20px; font-weight: 600; }
+
+        .project-card .project-arrow {
+            color: var(--text-muted);
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-arrow {
+            color: var(--rose);
+            transform: translate(4px, -4px);
+        }
+
+        .project-card .project-type {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--rose);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .project-card .project-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .project-card .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            padding: 4px 10px;
+            background: var(--tag-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .tag { border-color: rgba(232, 145, 178, 0.2); }
+
+        .project-card-wip {
+            border-left: 3px solid var(--rose);
+            cursor: default;
+        }
+
+        /* ===== SKILLS ===== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .skill-group {
+            padding: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: border-color 0.3s ease;
+        }
+
+        .skill-group:hover { border-color: rgba(232, 145, 178, 0.3); }
+
+        .skill-group h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--rose);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .skill-group p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact-section {
+            border-bottom: none;
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .contact-section .section-label { justify-content: center; }
+        .contact-section .section-title { margin-bottom: 16px; }
+
+        .contact-section .contact-text {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 36px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--rose);
+            border-color: var(--rose);
+            box-shadow: 0 0 15px var(--rose-dim);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 30px 0;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        footer .heart { color: var(--rose); }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            main { padding: 0 24px; }
+            nav .nav-inner { padding: 0 24px; }
+            .hero { padding-top: 120px; padding-bottom: 60px; }
+            .hero h1 { font-size: 34px; }
+            .skills-grid { grid-template-columns: 1fr; }
+            nav .nav-links { gap: 20px; }
+            nav .nav-links a { font-size: 11px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 28px; }
+            .hero .subtitle { font-size: 13px; }
+            .contact-links { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-bg"></div>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-inner">
+            <div class="logo">S.Naggara</div>
+            <div class="nav-links">
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="greeting">hello world</div>
+            <h1>Samia <span class="accent">Naggara</span></h1>
+            <div class="subtitle">Data Engineer · Cloud & Platform Engineer</div>
+            <p class="description">
+                Throughout my training, I developed skills in systems and cloud engineering, particularly through designing and automating pipelines and technical workflows, with a focus on reliability and maintainability. I pay close attention to security and system robustness. I thrive in production-oriented environments where technical rigor and architecture quality are central.
+            </p>
+            <div class="cta-row">
+                <a href="https://github.com/sanaggar" target="_blank" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    GitHub
+                </a>
+                <a href="CV_Samia_Naggara_2026.pdf" class="btn btn-secondary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    Download CV
+                </a>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects">
+            <div class="section-label"><span class="arrow">▸</span> Projects</div>
+            <h2 class="section-title">What I've built</h2>
+
+            <div class="projects-grid">
+                <!-- Crypto Data Platform -->
+                <a href="https://github.com/sanaggar/sanaggar-crypto-data-platform" target="_blank" class="project-card project-card-wip fade-in">
+                    <div class="project-type">🚧 In progress — Personal project</div>
+                    <div class="project-header">
+                        <span class="project-name">Crypto Data Platform</span>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <p class="project-desc">
+                        End-to-end data platform: crypto data ingestion (top 100 by market cap), transformation, orchestration and cloud deployment. Batch pipeline with Airflow & dbt, data quality with Great Expectations, monitoring with Grafana.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Airflow</span>
+                        <span class="tag">dbt</span>
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">Great Expectations</span>
+                        <span class="tag">Grafana</span>
+                        <span class="tag">FastAPI</span>
+                        <span class="tag">GCP (GKE)</span>
+                        <span class="tag">Terraform</span>
+                        <span class="tag">Helm</span>
+                        <span class="tag">GitHub Actions</span>
+                        <span class="tag">ArgoCD</span>
+                    </div>
+                </a>
+
+                <!-- Inception of Things -->
+                <a href="https://github.com/sanaggar/Inception-of-Things-sanaggar" target="_blank" class="project-card fade-in">
+                    <div class="project-type">42 Nice</div>
+                    <div class="project-header">
+                        <span class="project-name">Inception of Things</span>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <p class="project-desc">
+                        Multi-node Kubernetes infrastructure with K3s/K3d, Ingress routing with Traefik, GitOps pipeline with Argo CD, Infrastructure as Code with Vagrant, and Gitlab integration.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Kubernetes</span>
+                        <span class="tag">K3s/K3d</span>
+                        <span class="tag">ArgoCD</span>
+                        <span class="tag">Traefik</span>
+                        <span class="tag">Vagrant</span>
+                        <span class="tag">Gitlab</span>
+                        <span class="tag">GitOps</span>
+                    </div>
+                </a>
+
+                <!-- Inception -->
+                <a href="https://github.com/sanaggar/Inception" target="_blank" class="project-card fade-in">
+                    <div class="project-type">42 Nice</div>
+                    <div class="project-header">
+                        <span class="project-name">Inception</span>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <p class="project-desc">
+                        Multi-container Docker Compose infrastructure: NGINX, WordPress, MariaDB with persistent volumes, custom networking and TLS encryption.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Docker</span>
+                        <span class="tag">Docker Compose</span>
+                        <span class="tag">NGINX</span>
+                        <span class="tag">MariaDB</span>
+                        <span class="tag">TLS</span>
+                    </div>
+                </a>
+
+                <!-- ft_irc -->
+                <a href="https://github.com/sanaggar/IRC" target="_blank" class="project-card fade-in">
+                    <div class="project-type">42 Nice</div>
+                    <div class="project-header">
+                        <span class="project-name">ft_irc</span>
+                        <span class="project-arrow">↗</span>
+                    </div>
+                    <p class="project-desc">
+                        IRC server built in C++ — sockets programming, network protocols, concurrent connections handling.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">C++</span>
+                        <span class="tag">Sockets</span>
+                        <span class="tag">TCP/IP</span>
+                        <span class="tag">IRC</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills">
+            <div class="section-label"><span class="arrow">▸</span> Skills</div>
+            <h2 class="section-title">Tech stack</h2>
+
+            <div class="skills-grid">
+                <div class="skill-group fade-in">
+                    <h3>Languages</h3>
+                    <p>Python · SQL · C · C++ · TypeScript · JavaScript</p>
+                </div>
+                <div class="skill-group fade-in">
+                    <h3>Orchestration</h3>
+                    <p>Kubernetes (K3s/K3d) · Docker · Vagrant</p>
+                </div>
+                <div class="skill-group fade-in">
+                    <h3>Backend & Databases</h3>
+                    <p>Node.js · Next.js · PostgreSQL · Prisma · FastAPI</p>
+                </div>
+                <div class="skill-group fade-in">
+                    <h3>CI/CD & GitOps</h3>
+                    <p>Argo CD · GitHub Actions · Git</p>
+                </div>
+                <div class="skill-group fade-in">
+                    <h3>Frontend</h3>
+                    <p>React · HTML/CSS</p>
+                </div>
+                <div class="skill-group fade-in">
+                    <h3>Network & Security</h3>
+                    <p>Traefik · Ingress · Linux · TCP/IP</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="contact-section">
+            <div class="section-label"><span class="arrow">▸</span> Get in touch</div>
+            <h2 class="section-title">Let's connect</h2>
+            <p class="contact-text">Open to opportunities in data, cloud and platform engineering.</p>
+            <div class="contact-links">
+                <a href="mailto:Samia.Nagg@gmail.com" class="contact-link">✉ Email</a>
+                <a href="https://github.com/sanaggar" target="_blank" class="contact-link">⌘ GitHub</a>
+                <a href="https://linkedin.com/in/sanaggar" target="_blank" class="contact-link">⊡ LinkedIn</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Built with <span class="heart">♥</span> by Samia Naggara — 2026</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
